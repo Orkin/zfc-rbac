@@ -16,22 +16,34 @@
  * and is licensed under the MIT license.
  */
 
-ini_set('error_reporting', E_ALL);
+namespace ZfcRbacTest\Container;
 
-$files = [__DIR__ . '/../vendor/autoload.php', __DIR__ . '/../../../autoload.php'];
+use Interop\Container\ContainerInterface;
+use PHPUnit\Framework\TestCase;
+use ZfcRbac\Assertion\AssertionPluginManager;
+use ZfcRbac\Container\AssertionPluginManagerFactory;
 
-foreach ($files as $file) {
-    if (file_exists($file)) {
-        $loader = require $file;
+/**
+ * @covers \ZfcRbac\Container\AssertionPluginManagerFactory
+ */
+class AssertionPluginManagerFactoryTest extends TestCase
+{
+    public function testCanCreateFromFactory()
+    {
+        $container = $this->createMock(ContainerInterface::class);
 
-        break;
+        $container->expects($this->at(0))
+            ->method('get')
+            ->with('Config')
+            ->willReturn([
+                'zfc_rbac' => [
+                    'assertion_manager' => []
+                ]
+            ]);
+
+        $factory       = new AssertionPluginManagerFactory();
+        $pluginManager = $factory($container);
+
+        $this->assertInstanceOf(AssertionPluginManager::class, $pluginManager);
     }
 }
-
-if (! isset($loader)) {
-    throw new RuntimeException('vendor/autoload.php could not be found. Did you install via composer?');
-}
-
-$loader->add('ZfcRbacTest\\', __DIR__);
-
-unset($files, $file, $loader);

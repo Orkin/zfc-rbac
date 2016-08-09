@@ -15,23 +15,19 @@
  * This software consists of voluntary contributions made by many individuals
  * and is licensed under the MIT license.
  */
+namespace ZfcRbac\Service;
 
-ini_set('error_reporting', E_ALL);
-
-$files = [__DIR__ . '/../vendor/autoload.php', __DIR__ . '/../../../autoload.php'];
-
-foreach ($files as $file) {
-    if (file_exists($file)) {
-        $loader = require $file;
-
-        break;
-    }
+/**
+ * @author      Aeneas Rekkas
+ * @license     http://www.opensource.org/licenses/mit-license.html  MIT License
+ */
+interface AuthorizationServiceAwareInterface
+{
+    /**
+     * Set the AuthorizationService
+     *
+     * @param   AuthorizationServiceInterface $authorizationService
+     * @return  void
+     */
+    public function setAuthorizationService(AuthorizationServiceInterface $authorizationService);
 }
-
-if (! isset($loader)) {
-    throw new RuntimeException('vendor/autoload.php could not be found. Did you install via composer?');
-}
-
-$loader->add('ZfcRbacTest\\', __DIR__);
-
-unset($files, $file, $loader);

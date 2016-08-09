@@ -15,23 +15,19 @@
  * This software consists of voluntary contributions made by many individuals
  * and is licensed under the MIT license.
  */
+namespace ZfcRbacTest\Initializer;
 
-ini_set('error_reporting', E_ALL);
+use ZfcRbac\Service\AuthorizationServiceAwareInterface;
+use ZfcRbac\Service\AuthorizationServiceAwareTrait;
 
-$files = [__DIR__ . '/../vendor/autoload.php', __DIR__ . '/../../../autoload.php'];
-
-foreach ($files as $file) {
-    if (file_exists($file)) {
-        $loader = require $file;
-
-        break;
-    }
+/**
+ * A fake implementation for AuthorizationServiceAwareInterface
+ * 
+ * @author  Aeneas Rekkas
+ * @license MIT License
+ */
+class AuthorizationAwareFake implements AuthorizationServiceAwareInterface
+{
+    
+    use AuthorizationServiceAwareTrait;
 }
-
-if (! isset($loader)) {
-    throw new RuntimeException('vendor/autoload.php could not be found. Did you install via composer?');
-}
-
-$loader->add('ZfcRbacTest\\', __DIR__);
-
-unset($files, $file, $loader);

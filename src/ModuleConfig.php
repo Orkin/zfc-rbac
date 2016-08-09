@@ -16,22 +16,25 @@
  * and is licensed under the MIT license.
  */
 
-ini_set('error_reporting', E_ALL);
+namespace ZfcRbac\Server;
 
-$files = [__DIR__ . '/../vendor/autoload.php', __DIR__ . '/../../../autoload.php'];
+/**
+ * Class ModuleConfig
+ *
+ * @author  Florent Blaison <florent.blaison@gmail.com>
+ * @licence MIT
+ */
+class ModuleConfig
+{
+    /**
+     * @return array
+     */
+    public function __invoke(): array
+    {
+        $config = [];
+        $config = array_merge_recursive($config, require __DIR__ . '/../config/config.global.php');
+        $config = array_merge_recursive($config, require __DIR__ . '/../config/dependencies.global.php');
 
-foreach ($files as $file) {
-    if (file_exists($file)) {
-        $loader = require $file;
-
-        break;
+        return $config;
     }
 }
-
-if (! isset($loader)) {
-    throw new RuntimeException('vendor/autoload.php could not be found. Did you install via composer?');
-}
-
-$loader->add('ZfcRbacTest\\', __DIR__);
-
-unset($files, $file, $loader);

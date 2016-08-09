@@ -16,22 +16,41 @@
  * and is licensed under the MIT license.
  */
 
-ini_set('error_reporting', E_ALL);
+namespace ZfcRbacTest\Container;
 
-$files = [__DIR__ . '/../vendor/autoload.php', __DIR__ . '/../../../autoload.php'];
+use Interop\Container\ContainerInterface;
+use PHPUnit\Framework\TestCase;
+use Prophecy\Prophecy\ObjectProphecy;
+use ZfcRbac\Container\HasRoleHelperFactory;
+use ZfcRbac\Helper\HasRole;
+use ZfcRbac\Service\RoleService;
+use ZfcRbacTest\ContainerTrait;
 
-foreach ($files as $file) {
-    if (file_exists($file)) {
-        $loader = require $file;
+/**
+ * @covers \ZfcRbac\Container\HasRoleHelperFactory
+ */
+class HasRoleHelperFactoryTest extends TestCase
+{
 
-        break;
+    use ContainerTrait;
+
+    /**
+     * @var ObjectProphecy|ContainerInterface
+     */
+    protected $container;
+
+    public function setUp()
+    {
+        $this->container = $this->mockContainerInterface();
+    }
+
+    public function testFactory()
+    {
+        $this->injectServiceInContainer($this->container, RoleService::class, $this->createMock(RoleService::class));
+
+        $factory = new HasRoleHelperFactory();
+        $helper  = $factory($this->container->reveal());
+
+        $this->assertInstanceOf(HasRole::class, $helper);
     }
 }
-
-if (! isset($loader)) {
-    throw new RuntimeException('vendor/autoload.php could not be found. Did you install via composer?');
-}
-
-$loader->add('ZfcRbacTest\\', __DIR__);
-
-unset($files, $file, $loader);

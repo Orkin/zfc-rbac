@@ -16,22 +16,26 @@
  * and is licensed under the MIT license.
  */
 
-ini_set('error_reporting', E_ALL);
+namespace ZfcRbac\Assertion;
 
-$files = [__DIR__ . '/../vendor/autoload.php', __DIR__ . '/../../../autoload.php'];
+use ZfcRbac\Service\AuthorizationServiceInterface;
 
-foreach ($files as $file) {
-    if (file_exists($file)) {
-        $loader = require $file;
-
-        break;
-    }
+/**
+ * Interface that you can implement for dynamic assertions
+ *
+ * @author  Michaël Gallego <mic.gallego@gmail.com>
+ * @author  Aeneas Rekkas
+ * @author  Daniel Gimenes  <daniel@danielgimenes.com.br>
+ * @license MIT
+ */
+interface AssertionInterface
+{
+    /**
+     * Check if this assertion is true
+     *
+     * @param  AuthorizationServiceInterface $authorizationService
+     * @param  mixed                         $context
+     * @return bool
+     */
+    public function assert(AuthorizationServiceInterface $authorizationService, $context = false);
 }
-
-if (! isset($loader)) {
-    throw new RuntimeException('vendor/autoload.php could not be found. Did you install via composer?');
-}
-
-$loader->add('ZfcRbacTest\\', __DIR__);
-
-unset($files, $file, $loader);

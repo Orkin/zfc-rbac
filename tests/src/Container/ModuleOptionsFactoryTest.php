@@ -16,22 +16,42 @@
  * and is licensed under the MIT license.
  */
 
-ini_set('error_reporting', E_ALL);
+namespace ZfcRbacTest\Container;
 
-$files = [__DIR__ . '/../vendor/autoload.php', __DIR__ . '/../../../autoload.php'];
+use Interop\Container\ContainerInterface;
+use PHPUnit\Framework\TestCase;
+use Prophecy\Prophecy\ObjectProphecy;
+use ZfcRbac\Container\ModuleOptionsFactory;
+use ZfcRbac\Options\ModuleOptions;
+use ZfcRbacTest\ContainerTrait;
 
-foreach ($files as $file) {
-    if (file_exists($file)) {
-        $loader = require $file;
+/**
+ * @covers \ZfcRbac\Container\ModuleOptionsFactory
+ */
+class ModuleOptionsFactoryTest extends TestCase
+{
+    use ContainerTrait;
 
-        break;
+    /**
+     * @var ObjectProphecy|ContainerInterface
+     */
+    protected $container;
+
+    public function setUp()
+    {
+        $this->container = $this->mockContainerInterface();
+    }
+
+    public function testFactory()
+    {
+        $config = ['zfc_rbac' => []];
+
+        $this->injectServiceInContainer($this->container, 'Config', $config);
+
+        $factory = new ModuleOptionsFactory();
+        $options = $factory($this->container->reveal());
+
+        $this->assertInstanceOf(ModuleOptions::class, $options);
     }
 }
-
-if (! isset($loader)) {
-    throw new RuntimeException('vendor/autoload.php could not be found. Did you install via composer?');
-}
-
-$loader->add('ZfcRbacTest\\', __DIR__);
-
-unset($files, $file, $loader);
+ 

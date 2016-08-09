@@ -16,22 +16,38 @@
  * and is licensed under the MIT license.
  */
 
-ini_set('error_reporting', E_ALL);
+namespace ZfcRbac\Identity;
 
-$files = [__DIR__ . '/../vendor/autoload.php', __DIR__ . '/../../../autoload.php'];
+use Zend\Authentication\AuthenticationServiceInterface;
 
-foreach ($files as $file) {
-    if (file_exists($file)) {
-        $loader = require $file;
+/**
+ * This provider uses the Zend authentication service to fetch the identity
+ *
+ * @author  Michaël Gallego <mic.gallego@gmail.com>
+ * @license MIT
+ */
+class AuthenticationIdentityProvider implements IdentityProviderInterface
+{
+    /**
+     * @var AuthenticationServiceInterface
+     */
+    protected $authenticationService;
 
-        break;
+    /**
+     * Constructor
+     *
+     * @param AuthenticationServiceInterface $authenticationService
+     */
+    public function __construct(AuthenticationServiceInterface $authenticationService)
+    {
+        $this->authenticationService = $authenticationService;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getIdentity()
+    {
+        return $this->authenticationService->getIdentity();
     }
 }
-
-if (! isset($loader)) {
-    throw new RuntimeException('vendor/autoload.php could not be found. Did you install via composer?');
-}
-
-$loader->add('ZfcRbacTest\\', __DIR__);
-
-unset($files, $file, $loader);

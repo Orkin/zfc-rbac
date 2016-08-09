@@ -16,22 +16,17 @@
  * and is licensed under the MIT license.
  */
 
-ini_set('error_reporting', E_ALL);
+namespace ZfcRbac\Permission;
 
-$files = [__DIR__ . '/../vendor/autoload.php', __DIR__ . '/../../../autoload.php'];
-
-foreach ($files as $file) {
-    if (file_exists($file)) {
-        $loader = require $file;
-
-        break;
-    }
+/**
+ * Interface that permissions must implement to be used with the AuthorizationService
+ *
+ * Please note that currently the interface extends the one from RBAC, but starting in ZF3, the
+ * permission will be removed from RBAC component and moved here completely
+ *
+ * @author  Michaël Gallego <mic.gallego@gmail.com>
+ * @license MIT
+ */
+interface PermissionInterface
+{
 }
-
-if (! isset($loader)) {
-    throw new RuntimeException('vendor/autoload.php could not be found. Did you install via composer?');
-}
-
-$loader->add('ZfcRbacTest\\', __DIR__);
-
-unset($files, $file, $loader);

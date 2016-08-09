@@ -16,22 +16,40 @@
  * and is licensed under the MIT license.
  */
 
-ini_set('error_reporting', E_ALL);
+namespace ZfcRbac\Helper;
 
-$files = [__DIR__ . '/../vendor/autoload.php', __DIR__ . '/../../../autoload.php'];
+use Zend\View\Helper\AbstractHelper;
+use ZfcRbac\Service\RoleService;
 
-foreach ($files as $file) {
-    if (file_exists($file)) {
-        $loader = require $file;
+/**
+ * View helper that allows to test a role in a view
+ *
+ * @author  JM Leroux <jmleroux.pro@gmail.com>
+ * @license MIT
+ */
+class HasRole
+{
+    /**
+     * @var RoleService
+     */
+    private $roleService;
 
-        break;
+    /**
+     * Constructor
+     *
+     * @param RoleService $roleService
+     */
+    public function __construct(RoleService $roleService)
+    {
+        $this->roleService = $roleService;
+    }
+
+    /**
+     * @param string|string[] $roleOrRoles
+     * @return bool
+     */
+    public function __invoke($roleOrRoles)
+    {
+        return $this->roleService->matchIdentityRoles((array)$roleOrRoles);
     }
 }
-
-if (! isset($loader)) {
-    throw new RuntimeException('vendor/autoload.php could not be found. Did you install via composer?');
-}
-
-$loader->add('ZfcRbacTest\\', __DIR__);
-
-unset($files, $file, $loader);

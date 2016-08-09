@@ -16,22 +16,24 @@
  * and is licensed under the MIT license.
  */
 
-ini_set('error_reporting', E_ALL);
+namespace ZfcRbac\Service;
 
-$files = [__DIR__ . '/../vendor/autoload.php', __DIR__ . '/../../../autoload.php'];
+use ZfcRbac\Permission\PermissionInterface;
 
-foreach ($files as $file) {
-    if (file_exists($file)) {
-        $loader = require $file;
-
-        break;
-    }
+/**
+ * Minimal interface for an authorization service
+ *
+ * @author  Michaël Gallego <mic.gallego@gmail.com>
+ * @license MIT
+ */
+interface AuthorizationServiceInterface
+{
+    /**
+     * Check if the permission is granted to the current identity
+     *
+     * @param string|PermissionInterface $permission
+     * @param mixed                      $context
+     * @return bool
+     */
+    public function isGranted($permission, $context = null);
 }
-
-if (! isset($loader)) {
-    throw new RuntimeException('vendor/autoload.php could not be found. Did you install via composer?');
-}
-
-$loader->add('ZfcRbacTest\\', __DIR__);
-
-unset($files, $file, $loader);
