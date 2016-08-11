@@ -64,7 +64,7 @@ class IsGrantedHelper
      * @param $context
      * @return mixed
      */
-    public function isGranted($permission, $context)
+    public function isGranted($permission, $context = null)
     {
         return $this($permission, $context);
     }
