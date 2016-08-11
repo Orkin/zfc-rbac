@@ -54,4 +54,18 @@ class IsGrantedHelper
     {
         return $this->authorizationService->isGranted($permission, $context);
     }
+
+    /**
+     * Check against the given permission
+     *
+     * Proxies to __invoke().
+     *
+     * @param $permission
+     * @param $context
+     * @return mixed
+     */
+    public function isGranted($permission, $context)
+    {
+        return $this($permission, $context);
+    }
 }

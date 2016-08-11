@@ -51,4 +51,15 @@ class HasRoleHelper
     {
         return $this->roleService->matchIdentityRoles((array)$roleOrRoles);
     }
+
+    /**
+     * Proxies to __invoke().
+     *
+     * @param string|string[] $roleOrRoles
+     * @return mixed
+     */
+    public function hasRole($roleOrRoles)
+    {
+        return $this($roleOrRoles);
+    }
 }
