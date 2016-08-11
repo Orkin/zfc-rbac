@@ -20,6 +20,7 @@ namespace ZfcRbac\Options;
 
 use Zend\Stdlib\AbstractOptions;
 use ZfcRbac\Exception;
+use ZfcRbac\Identity\AuthenticationIdentityProvider;
 
 /**
  * Options for ZfcRbac module
@@ -34,7 +35,7 @@ class ModuleOptions extends AbstractOptions
      *
      * @var string
      */
-    protected $identityProvider = 'ZfcRbac\Identity\AuthenticationIdentityProvider';
+    protected $identityProvider = AuthenticationIdentityProvider::class;
 
     /**
      * Guest role (used when no identity is found)

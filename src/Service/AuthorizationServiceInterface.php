@@ -34,4 +34,11 @@ interface AuthorizationServiceInterface
      * @return bool
      */
     public function isGranted($permission, $context = null);
+
+    /**
+     * Returns the authenticated identity or null if no identity is available
+     *
+     * @return mixed|null
+     */
+    public function getIdentity();
 }
