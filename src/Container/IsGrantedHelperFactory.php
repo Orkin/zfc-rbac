@@ -23,7 +23,7 @@ use Interop\Container\Exception\ContainerException;
 use Zend\ServiceManager\Exception\ServiceNotCreatedException;
 use Zend\ServiceManager\Exception\ServiceNotFoundException;
 use ZfcRbac\Service\AuthorizationService;
-use ZfcRbac\Helper\IsGranted;
+use ZfcRbac\Helper\IsGrantedHelper;
 
 /**
  * Create the IsGranted view helper
@@ -37,16 +37,16 @@ class IsGrantedHelperFactory
      * Create an object
      *
      * @param  ContainerInterface $container
-     * @return IsGranted
+     * @return IsGrantedHelper
      * @throws ServiceNotFoundException if unable to resolve the service.
      * @throws ServiceNotCreatedException if an exception is raised when
      *     creating a service.
      * @throws ContainerException if any other error occurs
      */
-    public function __invoke(ContainerInterface $container): IsGranted
+    public function __invoke(ContainerInterface $container): IsGrantedHelper
     {
         $authorizationService = $container->get(AuthorizationService::class);
 
-        return new IsGranted($authorizationService);
+        return new IsGrantedHelper($authorizationService);
     }
 }

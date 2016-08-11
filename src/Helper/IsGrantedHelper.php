@@ -26,7 +26,7 @@ use ZfcRbac\Service\AuthorizationServiceInterface;
  * @author  Michaël Gallego <mic.gallego@gmail.com>
  * @license MIT
  */
-class IsGranted
+class IsGrantedHelper
 {
     /**
      * @var AuthorizationServiceInterface

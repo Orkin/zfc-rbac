@@ -18,7 +18,10 @@
 
 return [
     'dependencies' => [
-        'factories' => [
+        'invokables' => [
+            \Rbac\Rbac::class => Rbac\Rbac::class
+        ],
+        'factories'  => [
             /* Factories that do not map to a class */
             'ZfcRbac\Guards'                                              => ZfcRbac\Container\GuardsFactory::class,
 
@@ -30,8 +33,8 @@ return [
             ZfcRbac\Role\RoleProviderPluginManager::class                 => ZfcRbac\Container\RoleProviderPluginManagerFactory::class,
             ZfcRbac\Service\AuthorizationService::class                   => ZfcRbac\Container\AuthorizationServiceFactory::class,
             ZfcRbac\Service\RoleService::class                            => ZfcRbac\Container\RoleServiceFactory::class,
-            ZfcRbac\Helper\IsGranted::class                               => ZfcRbac\Container\IsGrantedHelperFactory::class,
-            ZfcRbac\Helper\HasRole::class                                 => ZfcRbac\Container\HasRoleHelperFactory::class
+            ZfcRbac\Helper\IsGrantedHelper::class                         => ZfcRbac\Container\IsGrantedHelperFactory::class,
+            ZfcRbac\Helper\HasRoleHelper::class                           => ZfcRbac\Container\HasRoleHelperFactory::class
         ],
     ],
 

@@ -26,7 +26,7 @@ use ZfcRbac\Service\RoleService;
  * @author  JM Leroux <jmleroux.pro@gmail.com>
  * @license MIT
  */
-class HasRole
+class HasRoleHelper
 {
     /**
      * @var RoleService

@@ -23,7 +23,7 @@ use Interop\Container\Exception\ContainerException;
 use Zend\ServiceManager\Exception\ServiceNotCreatedException;
 use Zend\ServiceManager\Exception\ServiceNotFoundException;
 use ZfcRbac\Service\RoleService;
-use ZfcRbac\Helper\HasRole;
+use ZfcRbac\Helper\HasRoleHelper;
 
 /**
  * Create the HasRole view helper
@@ -37,16 +37,16 @@ class HasRoleHelperFactory
      * Create an object
      *
      * @param  ContainerInterface $container
-     * @return HasRole
+     * @return HasRoleHelper
      * @throws ServiceNotFoundException if unable to resolve the service.
      * @throws ServiceNotCreatedException if an exception is raised when
      *     creating a service.
      * @throws ContainerException if any other error occurs
      */
-    public function __invoke(ContainerInterface $container): HasRole
+    public function __invoke(ContainerInterface $container): HasRoleHelper
     {
         $roleService = $container->get(RoleService::class);
 
-        return new HasRole($roleService);
+        return new HasRoleHelper($roleService);
     }
 }
