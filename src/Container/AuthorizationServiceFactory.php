@@ -25,7 +25,7 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 use ZfcRbac\Assertion\AssertionPluginManager;
 use ZfcRbac\Options\ModuleOptions;
 use ZfcRbac\Service\AuthorizationService;
-use ZfcRbac\Service\RoleService;
+use ZfcRbac\Service\RoleServiceInterface;
 
 /**
  * Factory to create the authorization service
@@ -46,8 +46,8 @@ class AuthorizationServiceFactory implements FactoryInterface
         /* @var Rbac $rbac */
         $rbac = new Rbac();
 
-        /* @var RoleService $roleService */
-        $roleService = $container->get(RoleService::class);
+        /* @var RoleServiceInterface $roleService */
+        $roleService = $container->get(RoleServiceInterface::class);
 
         /* @var AssertionPluginManager $assertionPluginManager */
         $assertionPluginManager = $container->get(AssertionPluginManager::class);
